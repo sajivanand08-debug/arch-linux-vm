@@ -311,5 +311,89 @@ I initially typed `password sajiv` instead of `passwd sajiv`. The terminal repor
 I corrected the command and successfully configured the account password.
 
 
+## Step 5: Installing GRUB and the LXQt Desktop
+
+### Installing the GRUB Bootloader
+
+I installed GRUB so Arch Linux could boot from the virtual hard drive.
+
+```bash
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+```
+
+The installation completed without errors.
+
+Next, I generated the GRUB configuration:
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+This detected the Linux kernel and generated the configuration needed to boot Arch Linux.
+
+GRUB displayed an `os-prober` warning, but this did not prevent the configuration from completing.
+
+### Enabling NetworkManager
+
+I enabled networking to start automatically:
+
+```bash
+systemctl enable NetworkManager
+```
+
+This ensures the VM can connect to the Internet after startup.
+
+### Installing the LXQt Desktop
+
+I chose LXQt because it is a lightweight graphical desktop environment.
+
+I installed LXQt, Xorg, SDDM, Firefox, and an icon theme:
+
+```bash
+pacman -S xorg-server lxqt breeze-icons sddm firefox
+```
+
+When prompted to select packages from the LXQt group, I accepted the default selection.
+
+I also accepted the default JACK audio provider.
+
+The packages installed successfully.
+
+### Enabling the Graphical Login Screen
+
+I enabled SDDM:
+
+```bash
+systemctl enable sddm
+```
+
+SDDM provides a graphical login screen.
+
+I then configured Arch Linux to boot into graphical mode:
+
+```bash
+systemctl set-default graphical.target
+```
+
+I verified the default startup target:
+
+```bash
+systemctl get-default
+```
+
+The expected result was:
+
+```text
+graphical.target
+```
+
+### Results
+
+After completing the installation, I successfully booted into the LXQt desktop and opened QTerminal.
+
+I also launched Firefox and confirmed that the virtual machine could access the Internet.
+
+
+
 
 
