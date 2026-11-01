@@ -391,6 +391,174 @@ graphical.target
 
 After completing the installation, I successfully booted into the LXQt desktop and opened QTerminal.
 
+
+## Step 6: SSH, Zsh, and AUR Installation
+
+### Enabling SSH
+
+I enabled the SSH service using:
+
+```bash
+systemctl enable sshd.service
+```
+
+This allows the SSH server to start automatically when Arch Linux boots.
+
+I verified the service configuration:
+
+```bash
+systemctl is-enabled sshd.service
+```
+
+The result was `enabled`.
+
+### Configuring Zsh
+
+I installed Zsh as an alternative to Bash and configured it as my user's default shell.
+
+I edited my configuration file:
+
+```bash
+nano /home/sajiv/.zshrc
+```
+
+I added a colored terminal prompt and useful aliases:
+
+```bash
+PROMPT='%F{cyan}%n@%m%f:%F{green}%~%f %# '
+
+alias ll='ls -lah --color=auto'
+alias update='sudo pacman -Syu'
+alias myip='ip -br addr'
+alias ..='cd ..'
+```
+
+The aliases provide shortcuts for listing files, updating packages, viewing IP addresses, and navigating directories.
+
+I assigned ownership of the configuration file:
+
+```bash
+chown sajiv:sajiv /home/sajiv/.zshrc
+```
+
+I checked the configuration for syntax errors:
+
+```bash
+zsh -n /home/sajiv/.zshrc
+```
+
+The configuration passed the syntax check.
+
+### Installing an AUR Package
+
+I chose the `yay-bin` package from the Arch User Repository.
+
+I downloaded its build files:
+
+```bash
+git clone https://aur.archlinux.org/yay-bin.git
+```
+
+I entered the package directory:
+
+```bash
+cd yay-bin
+```
+
+I reviewed the build instructions:
+
+```bash
+less PKGBUILD
+```
+
+I installed the package using:
+
+```bash
+makepkg -si
+```
+
+I verified that the package was installed:
+
+```bash
+pacman -Q yay-bin
+```
+
+Finally, I verified the program's version:
+
+```bash
+command yay --version
+```
+
+The command displayed the installed Yay version.
+
+## Step 7: Troubleshooting and Final Results
+
+### Problems Encountered
+
+**Problem 1: Operating System Not Found**
+
+VMware initially failed to boot the installation media.
+
+Solution: I corrected the ISO selection and connected the proper Arch Linux installation image.
+
+**Problem 2: Incorrect Command**
+
+I accidentally typed `ls -sf` instead of `ln -sf` when configuring the time zone.
+
+Solution: I corrected the command.
+
+**Problem 3: Password Command Error**
+
+I typed `password sajiv` instead of `passwd sajiv`.
+
+Solution: I corrected the command and successfully configured the password.
+
+**Problem 4: Sudo Permissions**
+
+The wheel group permission was initially commented out in the sudoers file.
+
+Solution: I enabled the permission and verified the configuration with `visudo -c`.
+
+**Problem 5: Yay Error**
+
+After installing Yay, I encountered an error when checking its version.
+
+I investigated the package installation and Pacman configuration.
+
+The command `command yay --version` successfully displayed the version.
+
+### Final Installation Results
+
+My completed virtual machine includes:
+
+- Arch Linux installed manually using VMware
+- A 40 GB virtual hard drive
+- UEFI booting using GRUB
+- LXQt graphical desktop
+- SDDM graphical login
+- User accounts: sajiv and codi
+- Sudo permissions through the wheel group
+- Zsh shell with a colored prompt
+- Custom Linux aliases
+- NetworkManager and OpenSSH
+- Firefox web browser
+- Yay installed from the AUR
+
+### Conclusion
+
+This project helped me understand how to install and configure Arch Linux manually.
+
+I learned about disk partitioning, filesystems, Linux user administration, package management, bootloaders, networking, and graphical desktop environments.
+
+I also gained troubleshooting experience by correcting mistakes during the installation process.
+
+### Reference
+
+Official Arch Linux Installation Guide:
+
+https://wiki.archlinux.org/title/Installation_guide
+
+
 I also launched Firefox and confirmed that the virtual machine could access the Internet.
 
 
