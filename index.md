@@ -175,4 +175,141 @@ During package installation, I encountered a warning that `/etc/vconsole.conf` w
 I was able to continue the installation without needing to reinstall any packages.
 
 
+## Step 4: Configuring Arch Linux
+
+After installing the base system, I configured the time zone, language, hostname, and user accounts.
+
+### Setting the Time Zone
+
+I configured Arch Linux to use Central Time:
+
+```bash
+ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+```
+
+This creates a symbolic link to the correct time zone.
+
+I then synchronized the hardware clock:
+
+```bash
+hwclock --systohc
+```
+
+**Problem encountered:** I initially typed `ls -sf` instead of `ln -sf`, causing an error. I corrected the command, and it executed successfully.
+
+### Configuring the System Language
+
+I opened the locale configuration:
+
+```bash
+nano /etc/locale.gen
+```
+
+I uncommented the following line:
+
+```text
+en_US.UTF-8 UTF-8
+```
+
+I generated the language settings:
+
+```bash
+locale-gen
+```
+
+Then I configured English as the default language:
+
+```bash
+echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+```
+
+I verified the setting:
+
+```bash
+cat /etc/locale.conf
+```
+
+The result was `LANG=en_US.UTF-8`.
+
+### Configuring the Hostname
+
+I named my virtual machine `archvm`:
+
+```bash
+echo 'archvm' > /etc/hostname
+```
+
+I verified the hostname:
+
+```bash
+cat /etc/hostname
+```
+
+### Setting the Root Password
+
+I ran:
+
+```bash
+passwd
+```
+
+I entered and confirmed a password for the root account. Linux does not display characters when entering passwords.
+
+### Creating User Accounts
+
+I created two accounts named `codi` and `sajiv`.
+
+```bash
+useradd -m -G wheel -s /bin/zsh codi
+passwd codi
+```
+
+```bash
+useradd -m -G wheel -s /bin/zsh sajiv
+passwd sajiv
+```
+
+The `-m` option creates home directories, `-G wheel` adds users to the administrative group, and `-s /bin/zsh` sets Zsh as their default shell.
+
+### Configuring Sudo Permissions
+
+I opened the sudo configuration using:
+
+```bash
+EDITOR=nano visudo
+```
+
+I uncommented:
+
+```text
+%wheel ALL=(ALL:ALL) ALL
+```
+
+This allows users in the `wheel` group to execute administrative commands using sudo.
+
+I checked the configuration:
+
+```bash
+visudo -c
+```
+
+The output confirmed `/etc/sudoers: parsed OK`.
+
+Finally, I verified both accounts:
+
+```bash
+id sajiv
+id codi
+```
+
+Both accounts belonged to the `wheel` group.
+
+### Additional Troubleshooting
+
+I initially typed `password sajiv` instead of `passwd sajiv`. The terminal reported that the command was not found.
+
+I corrected the command and successfully configured the account password.
+
+
+
 
