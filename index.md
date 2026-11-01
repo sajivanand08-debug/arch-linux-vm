@@ -124,3 +124,55 @@ lsblk
 The output confirmed that both partitions were mounted correctly.
 
 
+## Step 3: Installing the Arch Linux Base System
+
+After formatting and mounting my partitions, I installed the Arch Linux base system.
+
+### Installing Required Packages
+
+I ran the following command:
+
+```bash
+pacstrap -K /mnt base linux linux-firmware networkmanager grub efibootmgr sudo nano zsh openssh git base-devel
+```
+
+This installed the Linux kernel and essential tools, including networking, the GRUB bootloader, SSH, Zsh, and sudo.
+
+The installation completed successfully.
+
+### Generating the Filesystem Table
+
+Next, I generated the filesystem table:
+
+```bash
+genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+This recorded the partitions that Arch Linux should mount automatically.
+
+I verified the configuration using:
+
+```bash
+cat /mnt/etc/fstab
+```
+
+The output confirmed that the Linux root partition and EFI boot partition were configured correctly.
+
+### Entering the Installed System
+
+I then entered the installed Arch Linux environment:
+
+```bash
+arch-chroot /mnt
+```
+
+This allowed me to configure the operating system before rebooting.
+
+### Installation Notes
+
+During package installation, I encountered a warning that `/etc/vconsole.conf` was missing. However, the initial RAM filesystem was generated successfully.
+
+I was able to continue the installation without needing to reinstall any packages.
+
+
+
