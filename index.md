@@ -55,3 +55,72 @@ The command successfully received a response,
 confirming that my virtual machine had
 Internet access.
 
+
+## Step 2: Partitioning the Virtual Hard Drive
+
+After booting Arch Linux, I identified my virtual hard drive.
+
+### Identifying the Disk
+
+I ran:
+
+```bash
+lsblk
+```
+
+This showed my 40 GB virtual hard drive as `/dev/sda`.
+
+### Creating the Partitions
+
+I opened the partition editor:
+
+```bash
+cfdisk /dev/sda
+```
+
+I used the GPT partition table and created two partitions:
+
+- `/dev/sda1`: 1 GB, EFI System
+- `/dev/sda2`: 39 GB, Linux filesystem
+
+I selected Write, confirmed the changes, and exited.
+
+### Formatting the Partitions
+
+I formatted the EFI partition as FAT32:
+
+```bash
+mkfs.fat -F 32 /dev/sda1
+```
+
+I formatted the Linux partition as ext4:
+
+```bash
+mkfs.ext4 /dev/sda2
+```
+
+Both commands completed successfully.
+
+### Mounting the Partitions
+
+I mounted the Linux filesystem:
+
+```bash
+mount /dev/sda2 /mnt
+```
+
+Then I mounted the EFI partition:
+
+```bash
+mount --mkdir /dev/sda1 /mnt/boot
+```
+
+Finally, I verified the mount points:
+
+```bash
+lsblk
+```
+
+The output confirmed that both partitions were mounted correctly.
+
+
