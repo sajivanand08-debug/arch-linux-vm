@@ -4,11 +4,11 @@
 
 This document describes how I manually installed and configured Arch Linux using VMware.
 
-I installed the LXQt desktop environment, configured user accounts, enabled sudo and SSH, customized Zsh, and installed an AUR package.
+I installed a LXQt desktop environment, configured user accounts, enabled both sudo and SSH, customized Zsh, and installed an AUR package.
 
 ## Step 1: Creating My Virtual Machine
 
-I used VMware Workstation to create my Arch Linux virtual machine.
+First, I used VMware Workstation to create my Arch Linux virtual machine.
 
 ### VM Configuration
 
@@ -22,7 +22,7 @@ I used VMware Workstation to create my Arch Linux virtual machine.
 
 ### Downloading Arch Linux
 
-I downloaded the Arch Linux ISO from:
+I downloaded Arch Linux ISO from the website:
 https://archlinux.org/download/
 
 ### Problems Encountered
@@ -30,16 +30,17 @@ https://archlinux.org/download/
 Initially, VMware displayed an
 "Operating System not found" error.
 
-I discovered that I had selected the wrong
-installation file. I also encountered an
-Ubuntu installation menu instead of Arch Linux.
+I found that I had selected the wrong
+installation file, ending in sig instead of iso. I also encountered an
+Ubuntu installation menu instead of a Arch Linux
+download.
 
 I corrected this by downloading the proper
 Arch Linux ISO and selecting it under
-VMware's CD/DVD settings.
+the VMware's CD/DVD settings.
 
 After connecting the correct ISO, I successfully
-booted into the Arch Linux installation terminal.
+booted it into the Arch Linux installation terminal.
 
 ### Checking Internet Connectivity
 
@@ -49,16 +50,16 @@ I used the following command:
 ping -c 4 archlinux.org
 ```
 
-This tested my Internet connection.
+This tested whether my Internet connection worked.
 
-The command successfully received a response,
-confirming that my virtual machine had
+The command finally successfully received a response,
+confirming that my virtual machine had finally achieved
 Internet access.
 
 
 ## Step 2: Partitioning the Virtual Hard Drive
 
-After booting Arch Linux, I identified my virtual hard drive.
+After booting the Arch Linux, I identified my virtual hard drive.
 
 ### Identifying the Disk
 
@@ -83,17 +84,17 @@ I used the GPT partition table and created two partitions:
 - `/dev/sda1`: 1 GB, EFI System
 - `/dev/sda2`: 39 GB, Linux filesystem
 
-I selected Write, confirmed the changes, and exited.
+I selected Write, confirmed the changes made, and exited it.
 
 ### Formatting the Partitions
 
-I formatted the EFI partition as FAT32:
+I edited the EFI partition as FAT32:
 
 ```bash
 mkfs.fat -F 32 /dev/sda1
 ```
 
-I formatted the Linux partition as ext4:
+I edited the Linux partition as ext4:
 
 ```bash
 mkfs.ext4 /dev/sda2
@@ -115,18 +116,18 @@ Then I mounted the EFI partition:
 mount --mkdir /dev/sda1 /mnt/boot
 ```
 
-Finally, I verified the mount points:
+Finally, I made sure the mount points were verified:
 
 ```bash
 lsblk
 ```
 
-The output confirmed that both partitions were mounted correctly.
+If done proper, the output confirmed that both partitions were mounted correctly.
 
 
 ## Step 3: Installing the Arch Linux Base System
 
-After formatting and mounting my partitions, I installed the Arch Linux base system.
+After both formatting and mounting my partitions, I installed the Arch Linux base system.
 
 ### Installing Required Packages
 
@@ -156,7 +157,7 @@ I verified the configuration using:
 cat /mnt/etc/fstab
 ```
 
-The output confirmed that the Linux root partition and EFI boot partition were configured correctly.
+The output confirmed that the Linux root partition and EFI boot partition were made correctly.
 
 ### Entering the Installed System
 
@@ -166,7 +167,7 @@ I then entered the installed Arch Linux environment:
 arch-chroot /mnt
 ```
 
-This allowed me to configure the operating system before rebooting.
+This allowed me to install the operating system before rebooting.
 
 ### Installation Notes
 
@@ -181,7 +182,7 @@ After installing the base system, I configured the time zone, language, hostname
 
 ### Setting the Time Zone
 
-I configured Arch Linux to use Central Time:
+I configured Arch Linux to use Central Time, in which my state is in:
 
 ```bash
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
@@ -195,7 +196,7 @@ I then synchronized the hardware clock:
 hwclock --systohc
 ```
 
-**Problem encountered:** I initially typed `ls -sf` instead of `ln -sf`, causing an error. I corrected the command, and it executed successfully.
+**Problem encountered:** I initially typed `ls -sf` instead of `ln -sf`, which initially caused and error. I corrected the command, and it executed successfully.
 
 ### Configuring the System Language
 
@@ -257,7 +258,7 @@ I entered and confirmed a password for the root account. Linux does not display 
 
 ### Creating User Accounts
 
-I created two accounts named `codi` and `sajiv`.
+I created two accounts named `codi` and `sajiv`, the second one being mine.
 
 ```bash
 useradd -m -G wheel -s /bin/zsh codi
@@ -302,11 +303,11 @@ id sajiv
 id codi
 ```
 
-Both accounts belonged to the `wheel` group.
+Both of the accounts belonged to the `wheel` group.
 
 ### Additional Troubleshooting
 
-I initially typed `password sajiv` instead of `passwd sajiv`. The terminal reported that the command was not found.
+I at first typed `password sajiv` instead of `passwd sajiv`. The terminal reported that the command was not found.
 
 I corrected the command and successfully configured the account password.
 
@@ -335,13 +336,13 @@ GRUB displayed an `os-prober` warning, but this did not prevent the configuratio
 
 ### Enabling NetworkManager
 
-I enabled networking to start automatically:
+I enabled networking so it could start automatically:
 
 ```bash
 systemctl enable NetworkManager
 ```
 
-This ensures the VM can connect to the Internet after startup.
+This ensures the VM will be able to connect to the Internet after startup.
 
 ### Installing the LXQt Desktop
 
@@ -414,7 +415,7 @@ The result was `enabled`.
 
 ### Configuring Zsh
 
-I installed Zsh as an alternative to Bash and configured it as my user's default shell.
+I installed Zsh as an other option to Bash and configured it as my user's default shell.
 
 I edited my configuration file:
 
@@ -489,7 +490,7 @@ Finally, I verified the program's version:
 command yay --version
 ```
 
-The command displayed the installed Yay version.
+The command displayed the proper installed Yay version.
 
 ## Step 7: Troubleshooting and Final Results
 
@@ -542,13 +543,13 @@ My completed virtual machine includes:
 - Custom Linux aliases
 - NetworkManager and OpenSSH
 - Firefox web browser
-- Yay installed from the AUR
+- Yay was installed from the AUR
 
 ### Conclusion
 
 This project helped me understand how to install and configure Arch Linux manually.
 
-I learned about disk partitioning, filesystems, Linux user administration, package management, bootloaders, networking, and graphical desktop environments.
+I learned about disk partitioning, filesystems, Linux user administration, package management, bootloaders, networking, and graphical desktop environments when working on this assignment.
 
 I also gained troubleshooting experience by correcting mistakes during the installation process.
 
@@ -559,7 +560,7 @@ Official Arch Linux Installation Guide:
 https://wiki.archlinux.org/title/Installation_guide
 
 
-I also launched Firefox and confirmed that the virtual machine could access the Internet.
+In addition, I launched Firefox in order to prove that I could connect to the Internet.
 
 
 
