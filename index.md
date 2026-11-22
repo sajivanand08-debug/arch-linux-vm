@@ -559,6 +559,12 @@ Official Arch Linux Installation Guide:
 
 https://wiki.archlinux.org/title/Installation_guide
 
+---
+
+## My Docker Assignment
+
+[Installing Uptime Kuma Using Docker and Docker Compose](docker-uptime-kuma.md)
+
 
 In addition, I launched Firefox in order to prove that I could connect to the Internet.
 
