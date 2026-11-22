@@ -113,3 +113,8 @@ deploy application by using Docker Compose configuration file, how to acess appl
 website availability. An issue I faced was writing long commands into Proxmox noVNC terminal. I worked around it by writing
 shorter commands into it and downloading the official Docker Compose configuration file. 
 
+## Uptime Kuma Screenshot
+
+The screenshot below shows my Uptime Kuma application successfully monitoring Example Website with 100% uptime.
+
+![Uptime Kuma Monitoring Dashboard](uptime-kuma-monitor.png)
